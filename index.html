@@ -1,38 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To Do List</title>
-    <link rel="stylesheet" href="./style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dosis:wght@300&family=Source+Code+Pro&family=Source+Sans+Pro:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <header>
-<h1>LIST TASKS 2023</h1>
-<form id ="new-task" >
-    <input type="text"  id="new-input" placeholder="What do you have planned?">
-    <input type="submit" id="new-submit" value="Add">
-</form>
- </header>
- <main>
-    <section class="task-list">
-        <div>
-        <h2>Tasks</h2>
-        <p id ="task-count"> 3 remaining tasks</p>
-    </div>
-       <div id="tasks">
-            <div class="task">
-                <div class="content">
-                    <input type="text" class="task" value="My shiny task" readonly/>
-                </div>
-                <div class="actions">
-                 <button class="delete">delete</button>
-                </div>
+      <div id="title">
+        <h1>TODO</h1>
+        <p id="task-count">3 remaining tasks</p>
+      </div>
+
+      <form id="new-task">
+        <input
+          type="text"
+          id="new-input"
+          placeholder="What do you have planned?"
+        />
+        <input type="submit" id="new-submit" value="ADD" />
+      </form>
+    </header>
+    <main>
+      <section class="task-list">
+        <div id="tasks">
+          <div class="task">
+            <div class="content">
+              <input type="text" class="task" value="My shiny task" readonly />
             </div>
+            <div class="actions">
+              <button class="delete">DELETE</button>
+            </div>
+          </div>
         </div>
-</section>
-</main>
-<script src="./script.js"></script>   
-</body>
+      </section>
+    </main>
+    <script src="./script.js"></script>
+  </body>
 </html>
