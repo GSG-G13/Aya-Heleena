@@ -14,6 +14,10 @@ header {
   width: 50%;
   margin: 5% 0 2% 0;
   color: white;
+
+}
+h1 {
+margin-bottom: 10px;
 }
 #new-input,
 .content input {
@@ -42,18 +46,30 @@ header {
   width: 70px;
   height: 42px;
   outline: none;
-  background-color: #7c7c7c2b;
+  background-color: rgb(250, 90, 90);
   color: white;
   cursor: pointer;
+}
+#new-submit{
+    background-color: rgb(125, 247, 125);
 }
 main {
   width: 50%;
 }
-
+.task {
+    margin-bottom: 8px;
+}
 .task,
 #title {
   display: flex;
   justify-content: space-between;
 }
+
+::placeholder{
+    color: #fff;
+}
+
+
+
 @media screen and (max-width: 600px) {
 }
