@@ -2,6 +2,8 @@ const tasks = document.getElementById("tasks");
 const form = document.getElementById("new-task");
 const taskInput = document.getElementById("new-input");
 
+const taskCount = document.querySelector('#task-count span');
+
 let tasksList = JSON.parse(localStorage.getItem("toDos")) || [];
 //check localstorage if there any tasks
 if (localStorage.getItem("toDos")) {
@@ -9,6 +11,16 @@ if (localStorage.getItem("toDos")) {
     createElements(task);
   });
 }
+
+// handle task count 
+const handleTasksCount = (n) => {
+ if(n) {
+  taskCount.textContent = n
+ } else {
+  taskCount.textContent = 0
+ }
+}
+handleTasksCount(tasksList.length);
 //render tasks
 function createElements(val) {
   const newTask = document.createElement("div");
@@ -39,7 +51,24 @@ function createElements(val) {
   editButton.textContent = "EDIT";
   editButton.addEventListener("click", () => {
     newInput.removeAttribute("readonly");
+    newInput.style.border = '2px solid green'
+    newInput.focus()
   });
+
+  newInput.addEventListener('blur', () => {
+    newInput.setAttribute('readonly', true);
+    newInput.style.border = 'none';
+    
+    const tasks =  JSON.parse(localStorage.getItem("toDos"))
+    const newTasks = tasks.map(t =>  {
+      if(t.id === val.id) {
+        return {...t, name: newInput.value }
+      }else {
+        return t
+      }
+    })
+    localStorage.setItem("toDos", JSON.stringify(newTasks));
+  })
   const timeSpan = document.createElement("span");
   timeSpan.innerText = val.time;
   newActions.appendChild(deleteButton);
@@ -68,10 +97,17 @@ form.addEventListener("submit", (event) => {
   localStorage.setItem("toDos", JSON.stringify(tasksList)); //localstorage only supports strings
   createElements(task);
   taskInput.value = "";
+  handleTasksCount(tasksList.length)
 });
 function deleteTask(taskId) {
   tasksList = tasksList.filter((task) => task.id != taskId);
   localStorage.setItem("toDos", JSON.stringify(tasksList));
   document.getElementById(taskId).remove();
+  handleTasksCount(tasksList.length)
 }
-function editTask(id) {}
+
+
+function editTask(id) {
+}
+
+
