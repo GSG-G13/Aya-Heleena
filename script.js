@@ -1,6 +1,7 @@
 const tasks = document.getElementById("tasks");
 const form = document.getElementById("new-task");
 const taskInput = document.getElementById("new-input");
+const totalTasks = document.getElementById("task-count");
 
 let tasksList = JSON.parse(localStorage.getItem("toDos")) || [];
 //check localstorage if there any tasks
@@ -39,6 +40,7 @@ function createElements(val) {
   editButton.textContent = "EDIT";
   editButton.addEventListener("click", () => {
     newInput.removeAttribute("readonly");
+    editTask(val.id, newInput);
   });
   const timeSpan = document.createElement("span");
   timeSpan.innerText = val.time;
@@ -49,6 +51,7 @@ function createElements(val) {
   newTask.appendChild(newActions);
   newContent.prepend(timeSpan);
   tasks.appendChild(newTask);
+  countTasks();
 }
 // add new task
 form.addEventListener("submit", (event) => {
@@ -69,9 +72,17 @@ form.addEventListener("submit", (event) => {
   createElements(task);
   taskInput.value = "";
 });
+function countTasks() {
+  totalTasks.innerText = tasksList.length;
+}
 function deleteTask(taskId) {
   tasksList = tasksList.filter((task) => task.id != taskId);
   localStorage.setItem("toDos", JSON.stringify(tasksList));
   document.getElementById(taskId).remove();
+  countTasks();
 }
-function editTask(id) {}
+function editTask(id, el) {
+  let editedTask = tasksList.find((task) => task.id == id);
+  editedTask.name = el.value;
+  localStorage.setItem("toDos", JSON.stringify(tasksList));
+}
