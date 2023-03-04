@@ -14,10 +14,9 @@ header {
   width: 50%;
   margin: 5% 0 2% 0;
   color: white;
-
 }
 h1 {
-margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 #new-input,
 .content input {
@@ -37,7 +36,9 @@ margin-bottom: 10px;
 }
 .actions {
   width: 30%;
+  margin-top: 18px;
 }
+
 #new-submit,
 .actions button {
   margin: 0 12px 0px;
@@ -50,14 +51,17 @@ margin-bottom: 10px;
   color: white;
   cursor: pointer;
 }
-#new-submit{
-    background-color: rgb(125, 247, 125);
+#new-submit {
+  background-color: rgb(125, 247, 125);
+}
+.actions button.edit {
+  background-color: rgb(252, 161, 71);
 }
 main {
   width: 50%;
 }
 .task {
-    margin-bottom: 8px;
+  margin-bottom: 8px;
 }
 .task,
 #title {
@@ -65,11 +69,9 @@ main {
   justify-content: space-between;
 }
 
-::placeholder{
-    color: #fff;
+::placeholder {
+  color: #fff;
 }
-
-
 
 @media screen and (max-width: 600px) {
 }

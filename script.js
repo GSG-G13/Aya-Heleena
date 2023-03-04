@@ -1,65 +1,77 @@
-const tasks = document.getElementById('tasks');
-const form = document.getElementById('new-task');
+const tasks = document.getElementById("tasks");
+const form = document.getElementById("new-task");
 const taskInput = document.getElementById("new-input");
 
-let tasksList = [];
-function Elements(val){
-    const newTask = document.createElement('div');
-    newTask.classList.add('task');
-    // newTask.id=
-
-const newContent = document.createElement('div');
-newContent.classList.add('content');
-
-const newInput = document.createElement('input');
-newInput.classList.add('task');
-newInput.setAttribute('type', 'text');
-newInput.setAttribute('readonly', true);
-newInput.setAttribute('value', val);
-
-const newActions = document.createElement('div');
-newActions.classList.add('actions');
-
-const deleteButton = document.createElement('button');
-deleteButton.classList.add('delete');
-deleteButton.textContent = 'Delete';
-deleteButton.addEventListener('click', ()=>{
-    newTask.remove();
-})
-
-newActions.appendChild(deleteButton);
-newContent.appendChild(newInput);
-newTask.appendChild(newContent);
-newTask.appendChild(newActions);
-tasks.appendChild(newTask);
+let tasksList = JSON.parse(localStorage.getItem("toDos")) || [];
+//check localstorage if there any tasks
+if (localStorage.getItem("toDos")) {
+  tasksList.map((task) => {
+    createElements(task);
+  });
 }
-const createTask = (text) => {
-    if(localStorage.getItem("toDos")){
-        tasksList = JSON.parse(localStorage.getItem("toDos"));
-        tasksList.push(text);
-       Elements(text);
-    }else{
-        tasksList.push(text);
-        Elements(text);
-    }
-localStorage.setItem("toDos", JSON.stringify(tasksList) );
+//render tasks
+function createElements(val) {
+  const newTask = document.createElement("div");
+  newTask.classList.add("task");
+  newTask.setAttribute("id", val.id);
+
+  const newContent = document.createElement("div");
+  newContent.classList.add("content");
+
+  const newInput = document.createElement("input");
+  newInput.classList.add("task");
+  newInput.setAttribute("type", "text");
+  newInput.setAttribute("readonly", true);
+  newInput.setAttribute("value", val.name);
+  newInput.setAttribute("id", val.id);
+
+  const newActions = document.createElement("div");
+  newActions.classList.add("actions");
+
+  const deleteButton = document.createElement("button");
+  deleteButton.classList.add("delete");
+  deleteButton.textContent = "DELETE";
+  deleteButton.addEventListener("click", () => {
+    deleteTask(val.id);
+  });
+  const editButton = document.createElement("button");
+  editButton.classList.add("edit");
+  editButton.textContent = "EDIT";
+  editButton.addEventListener("click", () => {
+    newInput.removeAttribute("readonly");
+  });
+  const timeSpan = document.createElement("span");
+  timeSpan.innerText = val.time;
+  newActions.appendChild(deleteButton);
+  newActions.appendChild(editButton);
+  newContent.appendChild(newInput);
+  newTask.appendChild(newContent);
+  newTask.appendChild(newActions);
+  newContent.prepend(timeSpan);
+  tasks.appendChild(newTask);
 }
-function Read(){
-    if(localStorage.getItem("toDos")){
-        let dataaaaa = JSON.parse(localStorage.getItem("toDos"));
-        dataaaaa.forEach((el)=>{
-            Elements(el);
-})
-     }
-}
+// add new task
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  //check if the input is empty
+  if (taskInput.value == "") {
+    return;
+  }
 
-Read();
+  const task = {
+    id: new Date().getTime(),
+    name: taskInput.value,
+    time: new Date().getHours() + ":" + new Date().getMinutes(),
+  };
 
-
-
-form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    createTask(taskInput.value);
-    taskInput.value = '';
+  tasksList.push(task);
+  localStorage.setItem("toDos", JSON.stringify(tasksList)); //localstorage only supports strings
+  createElements(task);
+  taskInput.value = "";
 });
-
+function deleteTask(taskId) {
+  tasksList = tasksList.filter((task) => task.id != taskId);
+  localStorage.setItem("toDos", JSON.stringify(tasksList));
+  document.getElementById(taskId).remove();
+}
+function editTask(id) {}
